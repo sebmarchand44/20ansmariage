@@ -8,6 +8,7 @@
 
 * { box-sizing:border-box; }
 
+html, body { height: 100%; }
 body {
   margin:0;
   font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
@@ -15,21 +16,26 @@ body {
   color:var(--ink);
 }
 
+/* Layout */
 .container {
-  max-width:720px;
-  margin:40px auto;
-  padding:24px;
+  max-width: 900px;             /* un peu plus large pour respirer */
+  margin: 32px auto;
+  padding: 16px;
 }
 
 .card {
   background:var(--card);
   border-radius:16px;
   box-shadow:0 6px 24px rgba(0,0,0,.08);
-  padding:28px;
+  padding:24px;
+}
+
+@media (min-width: 768px) {
+  .card { padding:28px; }
 }
 
 h1 {
-  font-size:1.8rem;
+  font-size: clamp(1.4rem, 2.2vw + 1rem, 2rem);
   margin:.2rem 0 1rem;
 }
 
@@ -43,11 +49,10 @@ h1 {
   margin-bottom:6px;
 }
 
-.info {
-  margin-top:10px;
-  line-height:1.5;
-}
+/* Info section */
+.info { margin-top:10px; line-height:1.5; }
 
+/* Buttons */
 .buttons {
   display:flex;
   gap:12px;
@@ -64,18 +69,14 @@ h1 {
   cursor:pointer;
   text-decoration:none;
   color:#fff;
+  display:inline-block;
 }
 
 .button.google { background:#1a73e8; }
 .button.apple  { background:#000; }
 .button.outlook{ background:#0078d4; }
 
-.footer {
-  opacity:.7;
-  font-size:.9rem;
-  margin-top:18px;
-}
-
+/* Map */
 .map {
   margin-top:16px;
   border-radius:12px;
@@ -84,7 +85,7 @@ h1 {
 
 /* ====== Bandeau photo en style "carte" (bordure blanche + ombre) ====== */
 .hero {
-  margin: 10px 0 16px;
+  margin: 12px 0 18px;
   border-radius: 14px;
   overflow: hidden; /* arrondit aussi l'image */
 }
@@ -95,14 +96,23 @@ h1 {
   box-shadow: 0 6px 20px rgba(0,0,0,.08);
 }
 
+/* Image responsive et maîtrisée */
 .hero-img {
   display: block;
   width: 100%;
-  height: auto;           /* conserve les proportions */
-  max-height: 520px;      /* limite la hauteur sur desktop */
-  object-fit: cover;      /* recadre proprement si besoin */
+  height: auto;             /* conserve les proportions */
+  max-height: 520px;        /* limite la hauteur sur desktop */
+  object-fit: cover;        /* recadre proprement si besoin */
+  object-position: center;  /* centre le cadrage */
 }
 
 @media (min-width: 900px) {
   .hero-img { max-height: 620px; }
+}
+
+/* Footer */
+.footer {
+  opacity:.7;
+  font-size:.9rem;
+  margin-top:18px;
 }
