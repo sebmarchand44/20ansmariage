@@ -1,3 +1,4 @@
+
 :root {
   --bg:#fffaf6;
   --card:#ffffff;
@@ -43,11 +44,11 @@ h1 { font-size: clamp(1.35rem, 1.2rem + 1.2vw, 2rem); margin:.2rem 0 1rem; }
   appearance:none; border:none; border-radius:12px; padding:12px 16px;
   font-weight:600; cursor:pointer; text-decoration:none; color:#fff; display:inline-block;
 }
-.button.google { background:var(--blue); }
-.button.apple  { background:#000; }
-.button.outlook{ background:var(--outlook); }
-.button.rsvp   { background:var(--rsvp); }
-.button:hover  { filter:brightness(.96); }
+.button.google  { background:var(--blue); }
+.button.apple   { background:#000; }
+.button.outlook { background:var(--outlook); }
+.button.rsvp    { background:var(--rsvp); }
+.button:hover   { filter:brightness(.96); }
 
 /* Map */
 .map { margin-top:16px; border-radius:12px; overflow:hidden; }
@@ -55,21 +56,19 @@ h1 { font-size: clamp(1.35rem, 1.2rem + 1.2vw, 2rem); margin:.2rem 0 1rem; }
 /* ---- Photo with white frame ---- */
 .hero { margin: 12px 0 18px; border-radius: 14px; overflow: hidden; }
 .hero.card-look {
-  background: #fff; padding: 10px; box-shadow: 0 6px 20px rgba(0,0,0,.08);
+  background:#fff; padding:10px; box-shadow:0 6px 20px rgba(0,0,0,.08);
 }
 
-/* ✅ Keep the photo small and contained */
+/* ✅ Key constraints to keep the image small */
 .hero-img {
   display:block;
   width:100%;
   height:auto;
-  max-height: 24vh;         /* small on phones (≈ quarter of screen height) */
+  max-height: 24vh;          /* small on phones */
   object-fit: cover;
   object-position: center;
   border-radius: 8px;
 }
-
-/* Slightly larger as screen grows */
 @media (min-width: 480px)  { .hero-img { max-height: 200px; } }
 @media (min-width: 900px)  { .hero-img { max-height: 320px; } }
 
