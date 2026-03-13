@@ -8,76 +8,70 @@
   --rsvp:#e64980;
 }
 
-* { box-sizing: border-box; }
+* { box-sizing:border-box; }
+html, body { height:100%; }
 
-html, body { height: 100%; }
 body {
-  margin: 0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  background: var(--bg);
-  color: var(--ink);
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
 }
 
 /* Layout */
-.container { max-width: 720px; margin: 28px auto; padding: 16px; }
+.container { max-width: 760px; margin: 28px auto; padding: 16px; }
 .card {
-  background: var(--card);
-  border-radius: 16px;
-  box-shadow: 0 6px 24px rgba(0,0,0,.08);
-  padding: 22px;
+  background:var(--card);
+  border-radius:16px;
+  box-shadow:0 6px 24px rgba(0,0,0,.08);
+  padding:22px;
 }
-@media (min-width: 768px) { .card { padding: 28px; } }
+@media (min-width: 768px) { .card { padding:28px; } }
 
-h1 { font-size: clamp(1.35rem, 1.2rem + 1.2vw, 2rem); margin: .2rem 0 1rem; }
+h1 { font-size: clamp(1.35rem, 1.2rem + 1.2vw, 2rem); margin:.2rem 0 1rem; }
 .badge {
-  display: inline-block; background: var(--accent); color: #fff;
-  padding: 6px 10px; border-radius: 999px; font-weight: 600; margin-bottom: 6px;
+  display:inline-block; background:var(--accent); color:#fff;
+  padding:6px 10px; border-radius:999px; font-weight:600; margin-bottom:6px;
 }
 
 /* Info */
-.info { margin-top: 10px; line-height: 1.55; }
+.info { margin-top:10px; line-height:1.55; }
 
 /* Buttons */
-.buttons { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+.buttons { display:flex; gap:12px; flex-wrap:wrap; margin-top:18px; }
 .button {
-  appearance: none; border: none; border-radius: 12px; padding: 12px 16px;
-  font-weight: 600; cursor: pointer; text-decoration: none; color: #fff; display: inline-block;
+  appearance:none; border:none; border-radius:12px; padding:12px 16px;
+  font-weight:600; cursor:pointer; text-decoration:none; color:#fff; display:inline-block;
 }
-.button.google  { background: var(--blue); }
-.button.apple   { background: #000; }
-.button.outlook { background: var(--outlook); }
-.button.rsvp    { background: var(--rsvp); }
-.button:hover   { filter: brightness(.96); }
+.button.google { background:var(--blue); }
+.button.apple  { background:#000; }
+.button.outlook{ background:var(--outlook); }
+.button.rsvp   { background:var(--rsvp); }
+.button:hover  { filter:brightness(.96); }
 
 /* Map */
-.map { margin-top: 16px; border-radius: 12px; overflow: hidden; }
+.map { margin-top:16px; border-radius:12px; overflow:hidden; }
 
-/* ---- Photo card with white frame ---- */
+/* ---- Photo with white frame ---- */
 .hero { margin: 12px 0 18px; border-radius: 14px; overflow: hidden; }
 .hero.card-look {
   background: #fff; padding: 10px; box-shadow: 0 6px 20px rgba(0,0,0,.08);
 }
 
-/* ✅ The key constraints to make the image smaller */
+/* ✅ Keep the photo small and contained */
 .hero-img {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-height: 26vh;          /* very small on phones (≈ a quarter of screen height) */
+  display:block;
+  width:100%;
+  height:auto;
+  max-height: 24vh;         /* small on phones (≈ quarter of screen height) */
   object-fit: cover;
   object-position: center;
   border-radius: 8px;
 }
 
-/* Slightly larger on small tablets */
-@media (min-width: 480px) {
-  .hero-img { max-height: 220px; }
-}
-
-/* And a bit taller on desktop */
-@media (min-width: 900px) {
-  .hero-img { max-height: 320px; }  /* keep it contained */
-}
+/* Slightly larger as screen grows */
+@media (min-width: 480px)  { .hero-img { max-height: 200px; } }
+@media (min-width: 900px)  { .hero-img { max-height: 320px; } }
 
 /* Footer */
-.footer { opacity: .7; font-size: .9rem; margin-top: 18px; }
+.footer { opacity:.7; font-size:.9rem; margin-top:18px; }
