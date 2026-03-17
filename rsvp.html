@@ -3,266 +3,83 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>RSVP — 20 ans de Mariage</title>
-  <meta name="description" content="RSVP — Karen & Seb" />
+  <meta name="robots" content="noindex" />
+  <title>Merci — RSVP</title>
+  <meta name="description" content="Merci pour votre RSVP" />
   <style>
-    :root{--bg:#fffaf6;--card:#fff;--ink:#2b2b2b;--accent:#c77dff;--rsvp:#e64980;--muted:#666}
-    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+    :root{--bg:#fffaf6;--card:#fff;--ink:#2b2b2b;--accent:#c77dff}
+    *{box-sizing:border-box}
+    body{
+      margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      background:var(--bg);color:var(--ink)
+    }
     .wrap{max-width:640px;margin:28px auto;padding:16px}
-    .card{background:var(--card);border-radius:16px;box-shadow:0 6px 24px rgba(0,0,0,.08);padding:22px}
-    h1{font-size:clamp(1.3rem,1rem+1.4vw,1.8rem);margin:.2rem 0 1rem}
-    .badge{display:inline-block;background:var(--accent);color:#fff;padding:6px 10px;border-radius:999px;font-weight:600;margin-bottom:6px}
-    .step{display:none} .step.active{display:block}
-    label{font-weight:600;margin:.4rem 0 .35rem;display:block}
-    input,select{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;font-size:1rem}
-    .controls{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .btn{appearance:none;border:none;border-radius:12px;padding:12px 16px;font-weight:600;cursor:pointer;text-decoration:none;color:#fff;background:#444}
-    .btn.primary{background:var(--rsvp)} .btn.secondary{background:var(--muted)}
-    .hint{opacity:.7;font-size:.92rem;margin-top:8px}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .price{font-size:.95rem;color:#0b7285;margin-top:6px}
-    .total{margin-top:8px;font-weight:700}
-    .radio-row{display:flex;gap:14px;margin-top:6px}
-    .radio-row label{font-weight:500;margin:0}
-    a.link{color:#0b7285;text-decoration:none} a.link:hover{text-decoration:underline}
+    .card{
+      background:var(--card);border-radius:16px;box-shadow:0 6px 24px rgba(0,0,0,.08);padding:22px;
+      text-align:center
+    }
+    h1{font-size:clamp(1.4rem,1rem+1.6vw,2rem);margin:.2rem 0 .6rem}
+    p{line-height:1.6;margin:0.25rem 0}
+    .recap{margin-top:12px;text-align:left;background:#f8f9fa;border:1px solid #e9ecef;border-radius:12px;padding:12px}
+    .row{display:flex;justify-content:space-between;gap:8px;margin:4px 0}
+    .muted{opacity:.8;font-size:.95rem}
+    a.btn{
+      display:inline-block;margin-top:14px;background:var(--accent);color:#fff;text-decoration:none;
+      padding:12px 16px;border-radius:12px;font-weight:600
+    }
+    a.btn:hover{filter:brightness(.96)}
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="card">
-      <div class="badge">RSVP</div>
-      <h1>Confirmer ma présence</h1>
-
-      <!-- Étape 1 : Adultes / Enfants présents -->
-      <div id="step1" class="step active">
-        <div class="grid">
-          <div>
-            <label for="attAdults">Combien d’adultes ?</label>
-            <select id="attAdults" required>
-              <option value="0">0</option><option value="1">1</option><option value="2">2</option>
-              <option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option>
-            </select>
-          </div>
-          <div>
-            <label for="attKids">Combien d’enfants &lt; 13 ans ?</label>
-            <select id="attKids" required>
-              <option value="0">0</option><option value="1">1</option><option value="2">2</option>
-              <option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option>
-            </select>
-          </div>
-        </div>
-        <div id="attTotal" class="total" style="margin-top:10px">Total invités : 0</div>
-        <div class="controls">
-          <button class="btn primary" id="next1" disabled>Continuer</button>
-          index.htmlAnnuler</a>
+      <h1>✅ Merci !</h1>
+      <p>Votre confirmation a bien été envoyée.</p>
+      <div id="recap" class="recap" style="display:none">
+        <div class="muted">Récapitulatif :</div>
+        <div class="row"><span>Adultes (présents)</span><strong id="rA">—</strong></div>
+        <div class="row"><span>Enfants &lt; 13 (présents)</span><strong id="rK">—</strong></div>
+        <div class="row"><span>Nom / Famille</span><strong id="rN">—</strong></div>
+        <div class="row"><span>Dormir sur place</span><strong id="rS">—</strong></div>
+        <div id="sleepBlock" style="display:none">
+          <hr style="border:none;border-top:1px solid #e9ecef;margin:8px 0">
+          <div class="row"><span>Nuitée — Adultes (36 €)</span><strong id="rNA">—</strong></div>
+          <div class="row"><span>Nuitée — Enfants (26 €)</span><strong id="rNK">—</strong></div>
+          <div class="row"><span>Total nuitée</span><strong id="rNT">—</strong></div>
         </div>
       </div>
 
-      <!-- Étape 2 : Nom / Famille -->
-      <div id="step2" class="step">
-        <label for="name">Nom / Famille</label>
-        <input id="name" type="text" placeholder="Ex : Famille Dupont, ou Marie Martin" required />
-        <div class="controls">
-          <button class="btn secondary" id="back2">Retour</button>
-          <button class="btn primary" id="next2">Continuer</button>
-        </div>
-      </div>
-
-      <!-- Étape 3 : Nuitée sur place -->
-      <div id="step3" class="step">
-        <label>Souhaitez‑vous dormir sur place ?</label>
-        <div class="radio-row" role="radiogroup" aria-label="Dormir sur place">
-          <label><input type="radio" name="sleep" value="Oui"> Oui</label>
-          <label><input type="radio" name="sleep" value="Non"> Non</label>
-        </div>
-
-        <!-- Détails nuitée (affichés seulement si Oui) -->
-        <div id="sleepDetails" style="display:none;margin-top:12px">
-          <div class="grid">
-            <div>
-              <label for="nightAdults">Nuitée — Adultes (36 €)</label>
-              <select id="nightAdults">
-                <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option>
-                <option value="4">4</option><option value="5">5</option><option value="6">6</option>
-              </select>
-            </div>
-            <div>
-              <label for="nightKids">Nuitée — Enfants &lt; 13 ans (26 €)</label>
-              <select id="nightKids">
-                <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option>
-                <option value="4">4</option><option value="5">5</option><option value="6">6</option>
-              </select>
-            </div>
-          </div>
-          <div class="price">Tarifs indicatifs — règlement sur place : <strong>36 € / adulte</strong>, <strong>26 € / enfant &lt;13 ans</strong></div>
-          <div id="nightTotal" class="total">Total nuitée : 0 €</div>
-          <div class="hint">Astuce : laissez “0” si personne ne dort sur place.</div>
-        </div>
-
-        <div class="controls">
-          <button class="btn secondary" id="back3">Retour</button>
-          <button class="btn primary" id="submit">Envoyer</button>
-        </div>
-      </div>
+      <a class="btn" href="./index.html">← Revenir à l’invitation</a>
     </div>
   </div>
 
-  <!-- Iframe caché = cible de la soumission Google Form -->
-  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
-  <!-- Formulaire caché (POST direct vers Google Forms) -->
-  <form id="gform" target="hidden_iframe" method="POST" style="display:none"></form>
-
   <script>
-    // ================= PARAMÈTRES À RENSEIGNER =================
-    const FORM_ID        = "1FAIpQLSf3EDkXlg_d6nWDFxFV4hju5yxyurm18lXX6oLtnWHSWitfKg"; // ID du formulaire
-    // Remplacer par TES 'entry.xxxxx' (via lien prérempli du Form)
-    const ENTRY_ATT_ADU  = "entry.ADULTS_ATT_ID";   // Adultes (présents)
-    const ENTRY_ATT_KID  = "entry.KIDS_ATT_ID";     // Enfants <13 (présents)
-    const ENTRY_NAME     = "entry.NAME_ID";         // Nom / Famille
-    const ENTRY_SLEEP    = "entry.SLEEP_ID";        // Dormir sur place ? (Oui/Non)
-    const ENTRY_NGT_ADU  = "entry.ADULTS_NIGHT_ID"; // Nuitée — Adultes (36 €)
-    const ENTRY_NGT_KID  = "entry.KIDS_NIGHT_ID";   // Nuitée — Enfants <13 (26 €)
-    // ===========================================================
+    // Lis le récap mis par rsvp.html (si présent)
+    try {
+      const s = sessionStorage.getItem('rsvp_summary');
+      if (s) {
+        const data = JSON.parse(s);
+        const $ = id => document.getElementById(id);
+        const show = elId => ($(elId).style.display = '');
 
-    // ---- UI : étapes ----
-    const step1 = document.getElementById('step1');
-    const step2 = document.getElementById('step2');
-    const step3 = document.getElementById('step3');
+        $('rA').textContent  = data.attAdults ?? '0';
+        $('rK').textContent  = data.attKids ?? '0';
+        $('rN').textContent  = data.name || '—';
+        $('rS').textContent  = data.sleep || '—';
 
-    const attAdults = document.getElementById('attAdults');
-    const attKids   = document.getElementById('attKids');
-    const attTotal  = document.getElementById('attTotal');
-    const next1     = document.getElementById('next1');
-
-    const nameInput = document.getElementById('name');
-    const back2     = document.getElementById('back2');
-    const next2     = document.getElementById('next2');
-
-    const back3       = document.getElementById('back3');
-    const submitBtn   = document.getElementById('submit');
-    const sleepRadios = document.querySelectorAll('input[name="sleep"]');
-    const sleepDetails= document.getElementById('sleepDetails');
-    const nightAdults = document.getElementById('nightAdults');
-    const nightKids   = document.getElementById('nightKids');
-    const nightTotal  = document.getElementById('nightTotal');
-
-    // Étape 1 : compute total + validation (>0)
-    function updateAttTotal() {
-      const A = Number(attAdults.value || 0);
-      const K = Number(attKids.value || 0);
-      const T = A + K;
-      attTotal.textContent = "Total invités : " + T;
-      next1.disabled = (T <= 0);
-    }
-    // Écoute 'change' ET 'input' pour être sûr que ça réagit partout
-    ['change','input'].forEach(evt => {
-      attAdults.addEventListener(evt, updateAttTotal);
-      attKids.addEventListener(evt, updateAttTotal);
-    });
-    updateAttTotal();
-
-    next1.addEventListener('click', () => {
-      step1.classList.remove('active');
-      step2.classList.add('active');
-      nameInput.focus();
-    });
-
-    // Étape 2 : nom → Étape 3
-    back2.addEventListener('click', () => { step2.classList.remove('active'); step1.classList.add('active'); });
-    next2.addEventListener('click', () => {
-      if (!nameInput.value.trim()) { alert("Merci d’indiquer votre nom / famille."); nameInput.focus(); return; }
-      step2.classList.remove('active');
-      step3.classList.add('active');
-    });
-
-    // Étape 3 : nuitée + total nuitée
-    function updateNightTotal() {
-      const A = Number(nightAdults.value || 0);
-      const K = Number(nightKids.value || 0);
-      nightTotal.textContent = `Total nuitée : ${A*36 + K*26} €`;
-    }
-    ['change','input'].forEach(evt => {
-      nightAdults.addEventListener(evt, updateNightTotal);
-      nightKids.addEventListener(evt, updateNightTotal);
-    });
-
-    // Quand l’utilisateur choisit Oui, on pré-remplit nuitée avec la répartition de présence (modifiable)
-    sleepRadios.forEach(r => r.addEventListener('change', () => {
-      const yes = r.value === 'Oui' && r.checked;
-      sleepDetails.style.display = yes ? '' : 'none';
-      if (yes) {
-        nightAdults.value = attAdults.value;
-        nightKids.value = attKids.value;
-        updateNightTotal();
+        if (data.sleep === 'Oui') {
+          $('rNA').textContent = data.nightAdults ?? '0';
+          $('rNK').textContent = data.nightKids ?? '0';
+          $('rNT').textContent = (data.nightTotal ?? 0) + ' €';
+          show('sleepBlock');
+        }
+        show('recap');
+        // Optionnel : effacer après affichage
+        // sessionStorage.removeItem('rsvp_summary');
       }
-    }));
-
-    back3.addEventListener('click', () => { step3.classList.remove('active'); step2.classList.add('active'); });
-
-    // Soumission → Google Forms (POST) → redirection merci.html via iframe.load
-    const form   = document.getElementById('gform');
-    const iframe = document.getElementById('hidden_iframe');
-
-    function ensureHiddenInputs() {
-      const must = [
-        { name: ENTRY_ATT_ADU, value: "" },
-        { name: ENTRY_ATT_KID, value: "" },
-        { name: ENTRY_NAME,    value: "" },
-        { name: ENTRY_SLEEP,   value: "" },
-        { name: ENTRY_NGT_ADU, value: "" },
-        { name: ENTRY_NGT_KID, value: "" },
-        // champs additionnels utilisés par Google
-        { name: "fvv", value: "1" },
-        { name: "draftResponse", value: "[]\n" },
-        { name: "pageHistory", value: "0" }
-      ];
-      form.innerHTML = "";
-      must.forEach(m => {
-        const input = document.createElement('input');
-        input.type = 'hidden'; input.name = m.name; input.value = m.value;
-        form.appendChild(input);
-      });
-      form.action = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`;
+    } catch (e) {
+      /* silencieux */
     }
-
-    iframe.addEventListener('load', () => {
-      setTimeout(() => { window.location.href = "merci.html"; }, 200);
-    });
-
-    submitBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-
-      const A_att = Number(attAdults.value || 0);
-      const K_att = Number(attKids.value || 0);
-      const total = A_att + K_att;
-      if (total <= 0) { alert("Merci d’indiquer au moins 1 personne."); return; }
-
-      const name = nameInput.value.trim();
-      if (!name) { alert("Merci d’indiquer votre nom / famille."); nameInput.focus(); return; }
-
-      const choice = document.querySelector('input[name="sleep"]:checked');
-      if (!choice) { alert("Merci d’indiquer si vous dormez sur place (Oui/Non)."); return; }
-
-      // Nuitée
-      let A_ngt = 0, K_ngt = 0;
-      if (choice.value === 'Oui') {
-        A_ngt = Number(nightAdults.value || 0);
-        K_ngt = Number(nightKids.value || 0);
-        if (A_ngt + K_ngt === 0) { alert("Indiquez au moins 1 adulte/enfant pour la nuitée, ou choisissez Non."); return; }
-      }
-
-      ensureHiddenInputs();
-      form.querySelector(`[name="${CSS.escape(ENTRY_ATT_ADU)}"]`).value = String(A_att);
-      form.querySelector(`[name="${CSS.escape(ENTRY_ATT_KID)}"]`).value = String(K_att);
-      form.querySelector(`[name="${CSS.escape(ENTRY_NAME)}"]`).value    = name;
-      form.querySelector(`[name="${CSS.escape(ENTRY_SLEEP)}"]`).value   = choice.value;
-      form.querySelector(`[name="${CSS.escape(ENTRY_NGT_ADU)}"]`).value = String(A_ngt);
-      form.querySelector(`[name="${CSS.escape(ENTRY_NGT_KID)}"]`).value = String(K_ngt);
-
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Envoi…";
-      form.submit();
-    });
   </script>
 </body>
 </html>

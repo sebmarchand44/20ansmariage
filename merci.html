@@ -35,51 +35,5 @@
     <div class="card">
       <h1>✅ Merci !</h1>
       <p>Votre confirmation a bien été envoyée.</p>
-      <div id="recap" class="recap" style="display:none">
-        <div class="muted">Récapitulatif :</div>
-        <div class="row"><span>Adultes (présents)</span><strong id="rA">—</strong></div>
-        <div class="row"><span>Enfants &lt; 13 (présents)</span><strong id="rK">—</strong></div>
-        <div class="row"><span>Nom / Famille</span><strong id="rN">—</strong></div>
-        <div class="row"><span>Dormir sur place</span><strong id="rS">—</strong></div>
-        <div id="sleepBlock" style="display:none">
-          <hr style="border:none;border-top:1px solid #e9ecef;margin:8px 0">
-          <div class="row"><span>Nuitée — Adultes (36 €)</span><strong id="rNA">—</strong></div>
-          <div class="row"><span>Nuitée — Enfants (26 €)</span><strong id="rNK">—</strong></div>
-          <div class="row"><span>Total nuitée</span><strong id="rNT">—</strong></div>
-        </div>
-      </div>
 
-      <a class="btn" href="./index.html">← Revenir à l’invitation</a>
-    </div>
-  </div>
-
-  <script>
-    // Lis le récap mis par rsvp.html (si présent)
-    try {
-      const s = sessionStorage.getItem('rsvp_summary');
-      if (s) {
-        const data = JSON.parse(s);
-        const $ = id => document.getElementById(id);
-        const show = elId => ($(elId).style.display = '');
-
-        $('rA').textContent  = data.attAdults ?? '0';
-        $('rK').textContent  = data.attKids ?? '0';
-        $('rN').textContent  = data.name || '—';
-        $('rS').textContent  = data.sleep || '—';
-
-        if (data.sleep === 'Oui') {
-          $('rNA').textContent = data.nightAdults ?? '0';
-          $('rNK').textContent = data.nightKids ?? '0';
-          $('rNT').textContent = (data.nightTotal ?? 0) + ' €';
-          show('sleepBlock');
-        }
-        show('recap');
-        // Optionnel : effacer après affichage
-        // sessionStorage.removeItem('rsvp_summary');
-      }
-    } catch (e) {
-      /* silencieux */
-    }
-  </script>
-</body>
-</html>
+      <div id="recap" class="recap" style="
