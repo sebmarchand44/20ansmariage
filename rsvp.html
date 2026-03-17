@@ -15,7 +15,7 @@
     .step{display:none} .step.active{display:block}
     label{font-weight:600;margin:.4rem 0 .35rem;display:block}
     input,select{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;font-size:1rem}
-    .controls{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
+    .controls{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
     .btn{appearance:none;border:none;border-radius:12px;padding:12px 16px;font-weight:600;cursor:pointer;text-decoration:none;color:#fff;background:#444}
     .btn.primary{background:var(--rsvp)} .btn.secondary{background:var(--muted)}
     .hint{opacity:.7;font-size:.92rem;margin-top:8px}
@@ -33,21 +33,21 @@
       <div class="badge">RSVP</div>
       <h1>Confirmer ma présence</h1>
 
-      <!-- Étape 1 : répartition Adultes / Enfants -->
+      <!-- Étape 1 : Adultes / Enfants présents -->
       <div id="step1" class="step active">
         <div class="grid">
           <div>
             <label for="attAdults">Combien d’adultes ?</label>
             <select id="attAdults" required>
-              <option>0</option><option>1</option><option>2</option>
-              <option>3</option><option>4</option><option>5</option><option>6</option>
+              <option value="0">0</option><option value="1">1</option><option value="2">2</option>
+              <option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option>
             </select>
           </div>
           <div>
             <label for="attKids">Combien d’enfants &lt; 13 ans ?</label>
             <select id="attKids" required>
-              <option>0</option><option>1</option><option>2</option>
-              <option>3</option><option>4</option><option>5</option><option>6</option>
+              <option value="0">0</option><option value="1">1</option><option value="2">2</option>
+              <option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option>
             </select>
           </div>
         </div>
@@ -58,7 +58,7 @@
         </div>
       </div>
 
-      <!-- Étape 2 : identité (UN seul champ) -->
+      <!-- Étape 2 : Nom / Famille -->
       <div id="step2" class="step">
         <label for="name">Nom / Famille</label>
         <input id="name" type="text" placeholder="Ex : Famille Dupont, ou Marie Martin" required />
@@ -68,7 +68,7 @@
         </div>
       </div>
 
-      <!-- Étape 3 : nuitée sur place -->
+      <!-- Étape 3 : Nuitée sur place -->
       <div id="step3" class="step">
         <label>Souhaitez‑vous dormir sur place ?</label>
         <div class="radio-row" role="radiogroup" aria-label="Dormir sur place">
@@ -82,15 +82,15 @@
             <div>
               <label for="nightAdults">Nuitée — Adultes (36 €)</label>
               <select id="nightAdults">
-                <option>0</option><option>1</option><option>2</option><option>3</option>
-                <option>4</option><option>5</option><option>6</option>
+                <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option>
+                <option value="4">4</option><option value="5">5</option><option value="6">6</option>
               </select>
             </div>
             <div>
               <label for="nightKids">Nuitée — Enfants &lt; 13 ans (26 €)</label>
               <select id="nightKids">
-                <option>0</option><option>1</option><option>2</option><option>3</option>
-                <option>4</option><option>5</option><option>6</option>
+                <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option>
+                <option value="4">4</option><option value="5">5</option><option value="6">6</option>
               </select>
             </div>
           </div>
@@ -115,7 +115,7 @@
   <script>
     // ================= PARAMÈTRES À RENSEIGNER =================
     const FORM_ID        = "1FAIpQLSf3EDkXlg_d6nWDFxFV4hju5yxyurm18lXX6oLtnWHSWitfKg"; // ID du formulaire
-    // Remplacer par TES 'entry.xxxxx' (voir guide en bas)
+    // Remplacer par TES 'entry.xxxxx' (via lien prérempli du Form)
     const ENTRY_ATT_ADU  = "entry.ADULTS_ATT_ID";   // Adultes (présents)
     const ENTRY_ATT_KID  = "entry.KIDS_ATT_ID";     // Enfants <13 (présents)
     const ENTRY_NAME     = "entry.NAME_ID";         // Nom / Famille
@@ -148,14 +148,17 @@
 
     // Étape 1 : compute total + validation (>0)
     function updateAttTotal() {
-      const A = parseInt(attAdults.value||"0",10);
-      const K = parseInt(attKids.value||"0",10);
+      const A = Number(attAdults.value || 0);
+      const K = Number(attKids.value || 0);
       const T = A + K;
       attTotal.textContent = "Total invités : " + T;
       next1.disabled = (T <= 0);
     }
-    attAdults.addEventListener('change', updateAttTotal);
-    attKids.addEventListener('change', updateAttTotal);
+    // Écoute 'change' ET 'input' pour être sûr que ça réagit partout
+    ['change','input'].forEach(evt => {
+      attAdults.addEventListener(evt, updateAttTotal);
+      attKids.addEventListener(evt, updateAttTotal);
+    });
     updateAttTotal();
 
     next1.addEventListener('click', () => {
@@ -174,11 +177,14 @@
 
     // Étape 3 : nuitée + total nuitée
     function updateNightTotal() {
-      const A = parseInt(nightAdults.value||"0",10);
-      const K = parseInt(nightKids.value||"0",10);
+      const A = Number(nightAdults.value || 0);
+      const K = Number(nightKids.value || 0);
       nightTotal.textContent = `Total nuitée : ${A*36 + K*26} €`;
     }
-    [nightAdults, nightKids].forEach(el => el.addEventListener('change', updateNightTotal));
+    ['change','input'].forEach(evt => {
+      nightAdults.addEventListener(evt, updateNightTotal);
+      nightKids.addEventListener(evt, updateNightTotal);
+    });
 
     // Quand l’utilisateur choisit Oui, on pré-remplit nuitée avec la répartition de présence (modifiable)
     sleepRadios.forEach(r => r.addEventListener('change', () => {
@@ -226,8 +232,8 @@
     submitBtn.addEventListener('click', (e) => {
       e.preventDefault();
 
-      const A_att = parseInt(attAdults.value||"0",10);
-      const K_att = parseInt(attKids.value||"0",10);
+      const A_att = Number(attAdults.value || 0);
+      const K_att = Number(attKids.value || 0);
       const total = A_att + K_att;
       if (total <= 0) { alert("Merci d’indiquer au moins 1 personne."); return; }
 
@@ -240,18 +246,18 @@
       // Nuitée
       let A_ngt = 0, K_ngt = 0;
       if (choice.value === 'Oui') {
-        A_ngt = parseInt(nightAdults.value||"0",10);
-        K_ngt = parseInt(nightKids.value||"0",10);
+        A_ngt = Number(nightAdults.value || 0);
+        K_ngt = Number(nightKids.value || 0);
         if (A_ngt + K_ngt === 0) { alert("Indiquez au moins 1 adulte/enfant pour la nuitée, ou choisissez Non."); return; }
       }
 
       ensureHiddenInputs();
-      form.querySelector(`[name="${CSS.escape(ENTRY_ATT_ADU)}"]`).value = A_att.toString();
-      form.querySelector(`[name="${CSS.escape(ENTRY_ATT_KID)}"]`).value = K_att.toString();
+      form.querySelector(`[name="${CSS.escape(ENTRY_ATT_ADU)}"]`).value = String(A_att);
+      form.querySelector(`[name="${CSS.escape(ENTRY_ATT_KID)}"]`).value = String(K_att);
       form.querySelector(`[name="${CSS.escape(ENTRY_NAME)}"]`).value    = name;
       form.querySelector(`[name="${CSS.escape(ENTRY_SLEEP)}"]`).value   = choice.value;
-      form.querySelector(`[name="${CSS.escape(ENTRY_NGT_ADU)}"]`).value = A_ngt.toString();
-      form.querySelector(`[name="${CSS.escape(ENTRY_NGT_KID)}"]`).value = K_ngt.toString();
+      form.querySelector(`[name="${CSS.escape(ENTRY_NGT_ADU)}"]`).value = String(A_ngt);
+      form.querySelector(`[name="${CSS.escape(ENTRY_NGT_KID)}"]`).value = String(K_ngt);
 
       submitBtn.disabled = true;
       submitBtn.textContent = "Envoi…";
@@ -260,4 +266,3 @@
   </script>
 </body>
 </html>
-``
