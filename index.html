@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Invitation — 20 ans de Mariage</title>
   <meta name="description" content="Invitation — 20 ans de Mariage Karen & Seb" />
-  <!-- ✅ real stylesheet link -->
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -14,15 +13,19 @@
       <div class="badge">🥂 Invitation</div>
       <h1>20 ans de Mariage — Karen & Seb 💐</h1>
 
-      <!-- ✅ real image tag inside a framed “card” -->
+      <!-- Image principale en style “carte” + parallax -->
       <div class="hero card-look">
-        <img
-          class="hero-img"
-          src="assets/holycross_2026.jpg"
-          alt="Photo de l’abbaye"
-          loading="lazy"
-          decoding="async"
-        />
+        <div class="hero-parallax">
+          <img
+            src="assets/holycross_2026.jpg"
+            alt="Lieu de l’événement — 20 ans de Mariage Karen & Seb"
+            class="hero-img"
+            width="1600"
+            height="1067"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
       </div>
 
       <div class="info">
@@ -31,34 +34,20 @@
         <p>Célébrons ensemble nos 20 ans de mariage !</p>
       </div>
 
+      <!-- 👉 Bouton RSVP uniquement -->
       <div class="buttons">
-        <!-- ✅ proper buttons -->
-        <a
-          class="button google"
-          href="https://www.google.com/calendar/render?action=TEMPLATE&text=%F0%9F%A5%82%2020%20ans%20de%20Mariage%20%E2%80%94%20Karen%20%26%20Seb%20%F0%9F%92%90&dates=20260725T130000/20260725T180000&ctz=Europe%2FParis&details=C%C3%A9l%C3%A9brons%20ensemble%20nos%2020%20ans%20de%20mariage%20%21%0A%0A%F0%9F%94%97%20RSVP%20(dites-nous%20combien%20vous%20serez)%20:%20https%3A%2F%2Fdocs.google.com%2Fforms%2Fd%2Fe%2F1FAIpQLSf3EDkXlg_d6nWDFxFV4hju5yxyurm18lXX6oLtnWHSWitfKg%2Fviewform%3Fusp%3Dpublish-editor&location=Village%20Vigneron%2C%204%20La%20Plessisi%C3%A8re%2C%2044330%20La%20Chapelle-Heulin%2C%20France"
-          target="_blank" rel="noopener"
-        >
-          Ajouter à Google Calendar
-        </a>
-
-        <a class="button apple" href="event.ics" download>Ajouter à Apple Calendar</a>
-        <a class="button outlook" href="event.ics" download>Ajouter à Outlook</a>
-
-        <a
-          class="button rsvp"
-          href="https://docs.google.com/forms/d/e/1FAIpQLSf3EDkXlg_d6nWDFxFV4hju5yxyurm18lXX6oLtnWHSWitfKg/viewform?usp=publish-editor"
-          target="_blank" rel="noopener"
-        >
+        <a class="button rsvp" target="_blank" rel="noopener"
+           href="https://docs.google.com/forms/d/e/1FAIpQLSf3EDkXlg_d6nWDFxFV4hju5yxyurm18lXX6oLtnWHSWitfKg/viewform?usp=publish-editor">
           Confirmer ma présence (RSVP)
         </a>
       </div>
 
-      <!-- ✅ proper map embed -->
+      <!-- Carte Google Maps -->
       <div class="map">
         <iframe
           src="https://www.google.com/maps?q=Village%20Vigneron%2C%204%20La%20Plessisi%C3%A8re%2C%2044330%20La%20Chapelle-Heulin%2C%20France&output=embed"
           width="100%" height="260" style="border:0" loading="lazy" allowfullscreen
-        ></iframe>
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
 
       <p class="footer">
@@ -66,5 +55,45 @@
       </p>
     </div>
   </div>
+
+  <script>
+    // Parallax doux, désactivé si “reduce motion”
+    (function() {
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) return;
+
+      const wrapper = document.querySelector('.hero-parallax');
+      const img = document.querySelector('.hero-img');
+      if (!wrapper || !img) return;
+
+      let inView = false;
+      let lastY = 0;
+      const strength = 0.12; // intensité du mouvement (plus petit = plus subtil)
+
+      // On observe l’entrée/sortie de la section pour n’animer que quand elle est visible
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => { inView = e.isIntersecting; });
+      }, { threshold: 0 });
+
+      io.observe(wrapper);
+
+      const tick = () => {
+        if (inView) {
+          const rect = wrapper.getBoundingClientRect();
+          // distance depuis le centre de l’écran ([-0.5..0.5] environ)
+          const progress = (rect.top + rect.height * 0.5 - window.innerHeight * 0.5) / window.innerHeight;
+          // déplacement vertical
+          const targetY = progress * (rect.height * strength);
+          // interpolation légère pour la fluidité
+          lastY += (targetY - lastY) * 0.08;
+          img.style.transform = `translate3d(0, ${lastY.toFixed(2)}px, 0)`;
+        }
+        requestAnimationFrame(tick);
+      };
+
+      requestAnimationFrame(tick);
+    })();
+  </script>
 </body>
 </html>
+``
