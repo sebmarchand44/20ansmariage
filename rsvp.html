@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RSVP — 20 ans de Mariage</title>
+  <meta name="description" content="RSVP — Karen & Seb" />
+  <style>
+    :root{--bg:#fffaf6;--card:#fff;--ink:#2b2b2b;--accent:#c77dff;--rsvp:#e64980}
+    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+    .wrap{max-width:640px;margin:28px auto;padding:16px}
+    .card{background:var(--card);border-radius:16px;box-shadow:0 6px 24px rgba(0,0,0,.08);padding:22px}
+    h1{font-size:clamp(1.3rem,1rem+1.4vw,1.8rem);margin:.2rem 0 1rem}
+    .badge{display:inline-block;background:var(--accent);color:#fff;padding:6px 10px;border-radius:999px;font-weight:600;margin-bottom:6px}
+    .step{display:none} .step.active{display:block}
+    label{font-weight:600;margin:.4rem 0 .35rem;display:block}
+    input,select{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;font-size:1rem}
+    .controls{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
+    .btn{appearance:none;border:none;border-radius:12px;padding:12px 16px;font-weight:600;cursor:pointer;text-decoration:none;color:#fff;background:#444}
+    .btn.primary{background:var(--rsvp)} .btn.secondary{background:#666}
+    .hint{opacity:.7;font-size:.92rem;margin-top:8px}
+    .success{background:#e6fcf5;border:1px solid #96f2d7;color:#0b7285;padding:12px;border-radius:12px;margin-top:14px;display:none}
+    a.link{color:#0b7285;text-decoration:none} a.link:hover{text-decoration:underline}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="badge">RSVP</div>
+      <h1>Confirmer ma présence</h1>
+
+      <!-- Étape 1 : nombre de personnes -->
+      <div id="step1" class="step active">
+        <label for="count">Je viens à :</label>
+        <select id="count" required>
+          <option value="" selected disabled>Choisir…</option>
+          <option>1</option><option>2</option><option>3</option>
+          <option>4</option><option>5</option><option>6</option>
+        </select>
+        <div class="controls">
+          <button class="btn primary" id="next1" disabled>Continuer</button>
+          <a class="btn secondary" href="index.html">Annuler</a>
+        </div>
+      </div>
+
+      <!-- Étape 2 : identité -->
+      <div id="step2" class="step">
+        <label for="first">Prénom</label>
+        <input id="first" type="text" placeholder="Prénom" required />
+        <label for="last" style="margin-top:10px;">Nom</label>
+        <input id="last" type="text" placeholder="Nom" required />
+        <div class="hint">Merci d’indiquer le nom d’une personne de contact pour votre groupe.</div>
+
+        <div class="controls">
+          <button class="btn secondary" id="back2">Retour</button>
+          <button class="btn primary" id="submit">Envoyer</button>
+        </div>
+
+        <div id="ok" class="success">
+          ✅ Merci ! Votre confirmation a été envoyée.
+          <div style="margin-top:8px">
+            <a class="link" href="index.html">← Revenir à l’invitation</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Iframe caché = cible de la soumission Google Form (pas d’ouverture de page) -->
+  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
+  <!-- Formulaire caché qui POST direct vers Google Forms -->
+  <form id="gform" target="hidden_iframe" method="POST" style="display:none"></form>
+
+  <script>
+    // ================== PARAMÈTRES À RENSEIGNER (une fois) ==================
+    // ID de ton Google Form (pris depuis ton URL "viewform")
+    const FORM_ID = "1FAIpQLSf3EDkXlg_d6nWDFxFV4hju5yxyurm18lXX6oLtnWHSWitfKg";
+
+    // REMPLACER ces 3 IDs par ceux de TES champs (voir guide ci-dessous)
+    const ENTRY_COUNT = "entry.XXXXXXXXXX";   // champ "Combien serez-vous ?"
+    const ENTRY_FIRST = "entry.YYYYYYYYYY";   // champ "Prénom"
+    const ENTRY_LAST  = "entry.ZZZZZZZZZZ";   // champ "Nom"
+    // =======================================================================
+
+    // ---- Logique UI (étapes) ----
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+    const countSel = document.getElementById('count');
+    const next1 = document.getElementById('next1');
+    const back2 = document.getElementById('back2');
+    const submitBtn = document.getElementById('submit');
+    const ok = document.getElementById('ok');
+
+    countSel.addEventListener('change', () => { next1.disabled = !countSel.value; });
+    next1.addEventListener('click', () => {
+      step1.classList.remove('active');
+      step2.classList.add('active');
+      document.getElementById('first').focus();
+    });
+    back2.addEventListener('click', () => {
+      step2.classList.remove('active');
+      step1.classList.add('active');
+    });
+
+    // ---- Construction et soumission du POST vers Google Forms ----
+    const form = document.getElementById('gform');
+    const iframe = document.getElementById('hidden_iframe');
+
+    // Ajoute les inputs cachés requis par Google Forms
+    function ensureHiddenInputs() {
+      const must = [
+        { name: ENTRY_COUNT, value: "" },
+        { name: ENTRY_FIRST, value: "" },
+        { name: ENTRY_LAST,  value: "" },
+        // Ces champs sont facultatifs mais souvent acceptés
+        { name: "fvv", value: "1" },
+        { name: "draftResponse", value: "[]\n" },
+        { name: "pageHistory", value: "0" }
+      ];
+      form.innerHTML = "";
+      must.forEach(m => {
+        const input = document.createElement('input');
+        input.type = 'hidden'; input.name = m.name; input.value = m.value;
+        form.appendChild(input);
+      });
+      form.action = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`;
+    }
+
+    // Détecte la fin de la soumission (le iframe charge la page "Réponse enregistrée")
+    iframe.addEventListener('load', () => {
+      ok.style.display = 'block';
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Envoyé";
+    });
+
+    submitBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const first = document.getElementById('first').value.trim();
+      const last  = document.getElementById('last').value.trim();
+      const count = countSel.value;
+      if (!count || !first || !last) { alert("Merci de compléter tous les champs."); return; }
+
+      ensureHiddenInputs();
+
+      // Renseigne les valeurs dans les champs cachés
+      form.querySelector(`[name="${CSS.escape(ENTRY_COUNT)}"]`).value = count;
+      form.querySelector(`[name="${CSS.escape(ENTRY_FIRST)}"]`).value = first;
+      form.querySelector(`[name="${CSS.escape(ENTRY_LAST)}"]`).value  = last;
+
+      // Envoie direct vers Google (dans l'iframe caché)
+      form.submit();
+    });
+  </script>
+</body>
+</html>
+``
