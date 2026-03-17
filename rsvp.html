@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="fr">
 <head>
@@ -81,22 +80,22 @@
         <div id="sleepDetails" style="display:none;margin-top:12px">
           <div class="grid">
             <div>
-              <label for="nightAdults">Nuitée — Adultes (36 €)</label>
+              <label for="nightAdults">Nuitée — Adultes (36 €)</label>
               <select id="nightAdults">
                 <option>0</option><option>1</option><option>2</option><option>3</option>
                 <option>4</option><option>5</option><option>6</option>
               </select>
             </div>
             <div>
-              <label for="nightKids">Nuitée — Enfants &lt; 13 ans (26 €)</label>
+              <label for="nightKids">Nuitée — Enfants &lt; 13 ans (26 €)</label>
               <select id="nightKids">
                 <option>0</option><option>1</option><option>2</option><option>3</option>
                 <option>4</option><option>5</option><option>6</option>
               </select>
             </div>
           </div>
-          <div class="price">Tarifs indicatifs — règlement sur place : <strong>36 € / adulte</strong>, <strong>26 € / enfant &lt;13 ans</strong></div>
-          <div id="nightTotal" class="total">Total nuitée : 0 €</div>
+          <div class="price">Tarifs indicatifs — règlement sur place : <strong>36 € / adulte</strong>, <strong>26 € / enfant &lt;13 ans</strong></div>
+          <div id="nightTotal" class="total">Total nuitée : 0 €</div>
           <div class="hint">Astuce : laissez “0” si personne ne dort sur place.</div>
         </div>
 
@@ -240,3 +239,25 @@
 
       // Nuitée
       let A_ngt = 0, K_ngt = 0;
+      if (choice.value === 'Oui') {
+        A_ngt = parseInt(nightAdults.value||"0",10);
+        K_ngt = parseInt(nightKids.value||"0",10);
+        if (A_ngt + K_ngt === 0) { alert("Indiquez au moins 1 adulte/enfant pour la nuitée, ou choisissez Non."); return; }
+      }
+
+      ensureHiddenInputs();
+      form.querySelector(`[name="${CSS.escape(ENTRY_ATT_ADU)}"]`).value = A_att.toString();
+      form.querySelector(`[name="${CSS.escape(ENTRY_ATT_KID)}"]`).value = K_att.toString();
+      form.querySelector(`[name="${CSS.escape(ENTRY_NAME)}"]`).value    = name;
+      form.querySelector(`[name="${CSS.escape(ENTRY_SLEEP)}"]`).value   = choice.value;
+      form.querySelector(`[name="${CSS.escape(ENTRY_NGT_ADU)}"]`).value = A_ngt.toString();
+      form.querySelector(`[name="${CSS.escape(ENTRY_NGT_KID)}"]`).value = K_ngt.toString();
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Envoi…";
+      form.submit();
+    });
+  </script>
+</body>
+</html>
+``
