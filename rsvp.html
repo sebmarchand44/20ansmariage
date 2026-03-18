@@ -325,6 +325,12 @@
       radio.addEventListener('change', (e) => {
         if (e.target.value === 'Oui') {
           sleepSection.style.display = 'block';
+          // Auto-remplir avec les nombres d'adultes et enfants présents
+          const attAdults = document.getElementById('attAdults').value;
+          const attKids = document.getElementById('attKids').value;
+          nightAdultsInput.value = attAdults || '0';
+          nightKidsInput.value = attKids || '0';
+          updateNightTotal();
         } else {
           sleepSection.style.display = 'none';
           nightAdultsInput.value = '0';
