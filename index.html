@@ -6,8 +6,53 @@
   <title>Invitation — 20 ans de Mariage</title>
   <meta name="description" content="Invitation — 20 ans de Mariage Karen & Seb" />
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Smooth scrolling moderne */
+    html {
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    body {
+      overscroll-behavior-y: contain;
+    }
+    
+    /* Indicateur de scroll */
+    .scroll-indicator {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--rsvp));
+      transform-origin: left;
+      transform: scaleX(0);
+      z-index: 1000;
+      transition: transform 0.1s ease-out;
+    }
+    
+    /* Animation d'apparition au chargement */
+    .card > * {
+      opacity: 0;
+      animation: fadeIn 0.8s ease forwards;
+    }
+    
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    
+    .badge { animation-delay: 0.1s; }
+    h1 { animation-delay: 0.2s; }
+    .hero { animation-delay: 0.3s; }
+    .info { animation-delay: 0.4s; }
+    .buttons { animation-delay: 0.5s; }
+    .map { animation-delay: 0.6s; }
+    .footer { animation-delay: 0.7s; }
+  </style>
 </head>
 <body>
+  <!-- Indicateur de progression du scroll -->
+  <div class="scroll-indicator" id="scrollIndicator"></div>
   <div class="container">
     <div class="card">
       <div class="badge">🥂 Invitation</div>
@@ -54,7 +99,19 @@
   </div>
 
   <script>
-    // Parallax doux, désactivé si “reduce motion”
+    // ===== Indicateur de scroll =====
+    const scrollIndicator = document.getElementById('scrollIndicator');
+    
+    function updateScrollIndicator() {
+      const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height);
+      scrollIndicator.style.transform = `scaleX(${scrolled})`;
+    }
+    
+    window.addEventListener('scroll', updateScrollIndicator, { passive: true });
+    
+    // ===== Parallax doux, désactivé si "reduce motion" =====
     (function() {
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (reduce) return;

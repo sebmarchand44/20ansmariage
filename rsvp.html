@@ -7,10 +7,60 @@
   <meta name="description" content="Confirmez votre présence" />
   <link rel="stylesheet" href="styles.css" />
   <style>
-    /* Styles spécifiques au formulaire */
+    /* Smooth scrolling moderne pour mobile */
+    html {
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    body {
+      overscroll-behavior-y: contain;
+    }
+    
+    /* Animation d'apparition au scroll */
     .form-group {
       margin-bottom: 18px;
       text-align: left;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s ease forwards;
+    }
+    
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Délais progressifs pour effet cascade */
+    .form-group:nth-child(1) { animation-delay: 0.1s; }
+    .form-group:nth-child(2) { animation-delay: 0.2s; }
+    .form-group:nth-child(3) { animation-delay: 0.3s; }
+    .form-group:nth-child(4) { animation-delay: 0.4s; }
+    .form-group:nth-child(5) { animation-delay: 0.5s; }
+    .form-group:nth-child(6) { animation-delay: 0.6s; }
+    .form-group:nth-child(7) { animation-delay: 0.7s; }
+    
+    /* Scroll snap pour sections sur mobile */
+    @media (max-width: 768px) {
+      .container {
+        scroll-snap-type: y proximity;
+        overflow-y: auto;
+        height: 100vh;
+        padding: 0;
+      }
+      
+      .card {
+        scroll-snap-align: start;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-top: 20px;
+        margin: 0;
+        border-radius: 0;
+      }
     }
     .form-group label {
       display: block;
@@ -81,6 +131,55 @@
       opacity: 0.6;
       cursor: not-allowed;
     }
+    
+    /* Indicateur de scroll moderne */
+    .scroll-indicator {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--rsvp));
+      transform-origin: left;
+      transform: scaleX(0);
+      z-index: 1000;
+      transition: transform 0.1s ease-out;
+    }
+    
+    /* Bouton "retour en haut" moderne */
+    .scroll-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 48px;
+      height: 48px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      font-size: 24px;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(100px);
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 999;
+    }
+    
+    .scroll-top.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .scroll-top:hover {
+      background: var(--rsvp);
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    }
+    
+    .scroll-top:active {
+      transform: translateY(-2px);
+    }
     #sleepSection {
       margin-top: 12px;
       padding: 16px;
@@ -102,6 +201,12 @@
   </style>
 </head>
 <body>
+  <!-- Indicateur de progression du scroll -->
+  <div class="scroll-indicator" id="scrollIndicator"></div>
+  
+  <!-- Bouton retour en haut -->
+  <button class="scroll-top" id="scrollTop" aria-label="Retour en haut">↑</button>
+  
   <div class="container">
     <div class="card">
       <div class="badge">📝 RSVP</div>
@@ -182,6 +287,38 @@
   </div>
 
   <script>
+    // ===== Gestion du scroll moderne =====
+    
+    // Indicateur de progression
+    const scrollIndicator = document.getElementById('scrollIndicator');
+    const scrollTop = document.getElementById('scrollTop');
+    
+    function updateScrollIndicator() {
+      const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height);
+      scrollIndicator.style.transform = `scaleX(${scrolled})`;
+      
+      // Afficher/masquer le bouton retour en haut
+      if (winScroll > 300) {
+        scrollTop.classList.add('visible');
+      } else {
+        scrollTop.classList.remove('visible');
+      }
+    }
+    
+    window.addEventListener('scroll', updateScrollIndicator, { passive: true });
+    
+    // Retour en haut avec animation fluide
+    scrollTop.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+    
+    // ===== Gestion du formulaire =====
+    
     const form = document.getElementById('rsvpForm');
     const sleepRadios = document.querySelectorAll('input[name="sleep"]');
     const sleepSection = document.getElementById('sleepSection');

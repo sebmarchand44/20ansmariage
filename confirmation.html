@@ -8,6 +8,32 @@
   <meta name="description" content="Merci pour votre RSVP" />
   <link rel="stylesheet" href="styles.css" />
   <style>
+    /* Smooth scrolling moderne */
+    html {
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    body {
+      overscroll-behavior-y: contain;
+    }
+    
+    /* Animation d'apparition */
+    .card > * {
+      opacity: 0;
+      animation: fadeIn 0.8s ease forwards;
+    }
+    
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    
+    .badge { animation-delay: 0.1s; }
+    h1 { animation-delay: 0.2s; }
+    p { animation-delay: 0.3s; }
+    .recap { animation-delay: 0.4s; }
+    .btn { animation-delay: 0.5s; }
+    
     /* Styles spécifiques à la page de confirmation */
     .recap{margin-top:12px;text-align:left;background:#f8f9fa;border:1px solid #e9ecef;border-radius:12px;padding:12px}
     .row{display:flex;justify-content:space-between;gap:8px;margin:4px 0}
