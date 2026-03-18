@@ -345,7 +345,7 @@
     nightAdultsInput.addEventListener('input', updateNightTotal);
     nightKidsInput.addEventListener('input', updateNightTotal);
 
-    // Soumission du formulaire
+    // Soumission du formulaire vers Google Forms
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       
@@ -364,16 +364,39 @@
       // Sauvegarder dans sessionStorage pour la page de confirmation
       sessionStorage.setItem('rsvp_summary', JSON.stringify(data));
 
-      // Simuler l'envoi (vous pouvez remplacer par un vrai endpoint)
       const submitBtn = form.querySelector('.submit-btn');
       submitBtn.disabled = true;
       submitBtn.textContent = 'Envoi en cours...';
 
-      // Simuler un délai d'envoi
-      setTimeout(() => {
-        // Rediriger vers la page de confirmation
-        window.location.href = 'confirmation.html';
-      }, 800);
+      // Préparer les données pour Google Forms
+      const googleFormData = new FormData();
+      googleFormData.append('entry.279557762', data.name);
+      googleFormData.append('entry.178898459', data.attAdults);
+      googleFormData.append('entry.191678164', data.attKids);
+      googleFormData.append('entry.1115312584', data.sleep);
+      googleFormData.append('entry.1070553550', data.nightAdults);
+      googleFormData.append('entry.1451773897', data.nightKids);
+      googleFormData.append('entry.701520142', data.message || '');
+
+      try {
+        // Envoyer à Google Forms
+        await fetch('https://docs.google.com/forms/d/e/1FAIpQLSdiONpL4gtxk9bSAqG2ViKqswaHFtFHn4olRO7q2KF0HN0uAA/formResponse', {
+          method: 'POST',
+          body: googleFormData,
+          mode: 'no-cors' // Important pour éviter les erreurs CORS
+        });
+        
+        // Rediriger vers la page de confirmation après un court délai
+        setTimeout(() => {
+          window.location.href = 'confirmation.html';
+        }, 500);
+      } catch (error) {
+        console.error('Erreur lors de l\'envoi:', error);
+        // Rediriger quand même vers la confirmation
+        setTimeout(() => {
+          window.location.href = 'confirmation.html';
+        }, 500);
+      }
     });
   </script>
 </body>
