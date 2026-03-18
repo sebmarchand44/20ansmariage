@@ -49,90 +49,137 @@
     .map { animation-delay: 0.6s; }
     .footer { animation-delay: 0.7s; }
     
-    /* Love story section with animations */
-    .love-story {
-      text-align: center;
-      margin: 16px 0;
-      padding: 16px;
-      background: linear-gradient(135deg, #fff5f7 0%, #fff9fb 100%);
-      border-radius: 12px;
-      border: 2px solid #ffe0e8;
+    /* Map Journey Animation */
+    .map-journey {
       position: relative;
-      overflow: visible;
+      height: 300px;
+      margin: 20px 0;
+      border-radius: 12px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
     
-    .journey-text {
+    .map-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="%23e0e0e0" stroke-width="0.5"/></pattern></defs><rect width="800" height="400" fill="url(%23grid)"/></svg>') center/cover;
+    }
+    
+    .location-marker {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      transform: translate(-50%, -50%);
+      animation: markerPulse 2s ease-in-out infinite;
+    }
+    
+    .marker-ireland {
+      top: 30%;
+      left: 35%;
+      animation: zoomOut 8s ease-in-out infinite;
+    }
+    
+    .marker-france {
+      top: 45%;
+      left: 48%;
+      animation: zoomIn 8s ease-in-out infinite;
+      animation-delay: 4s;
+      opacity: 0;
+    }
+    
+    .marker-pin {
+      font-size: 2rem;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    }
+    
+    .marker-label {
+      position: absolute;
+      top: 45px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      border: 2px solid var(--accent);
+    }
+    
+    .year-badge {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--rsvp);
+      margin-top: 2px;
+    }
+    
+    .journey-path {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    
+    .path-line {
+      stroke: var(--rsvp);
+      stroke-width: 3;
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+      fill: none;
+      animation: drawPath 8s ease-in-out infinite;
+      filter: drop-shadow(0 0 3px rgba(230, 73, 128, 0.5));
+    }
+    
+    @keyframes markerPulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.1); }
+    }
+    
+    @keyframes zoomOut {
+      0%, 45% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      50%, 100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.3);
+      }
+    }
+    
+    @keyframes zoomIn {
+      0%, 45% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.3);
+      }
+      50%, 100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+    
+    @keyframes drawPath {
+      0%, 45% { stroke-dashoffset: 1000; }
+      50%, 100% { stroke-dashoffset: 0; }
+    }
+    
+    .journey-title {
+      text-align: center;
       font-size: 1.1rem;
       font-weight: 600;
-      color: var(--rsvp);
-      margin: 8px 0;
-      animation: fadeInScale 1.2s ease-out;
-    }
-    
-    .anniversary-text {
-      font-size: 1rem;
       color: var(--accent);
-      font-style: italic;
-      margin: 8px 0;
-      animation: fadeInUp 1.5s ease-out;
-    }
-    
-    @keyframes fadeInScale {
-      0% {
-        opacity: 0;
-        transform: scale(0.9);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-    
-    @keyframes fadeInUp {
-      0% {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    /* Floating hearts animation */
-    .love-story::before,
-    .love-story::after {
-      content: '💕';
-      position: absolute;
-      font-size: 1.5rem;
-      opacity: 0;
-      animation: floatingHearts 3s ease-in-out infinite;
-    }
-    
-    .love-story::before {
-      left: 10%;
-      animation-delay: 0s;
-    }
-    
-    .love-story::after {
-      right: 10%;
-      animation-delay: 1.5s;
-    }
-    
-    @keyframes floatingHearts {
-      0%, 100% {
-        opacity: 0;
-        transform: translateY(0) scale(0.8);
-      }
-      50% {
-        opacity: 0.6;
-        transform: translateY(-20px) scale(1);
-      }
+      margin-bottom: 12px;
     }
     
     @media (prefers-reduced-motion: reduce){
-      .love-story, .journey-text, .anniversary-text { animation: none !important }
-      .love-story::before, .love-story::after { animation: none !important; opacity: 0 !important; }
+      .location-marker, .path-line { animation: none !important; }
+      .marker-ireland { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      .marker-france { opacity: 1; transform: translate(-50%, -50%) scale(1); animation-delay: 0s; }
+      .path-line { stroke-dashoffset: 0; }
     }
   </style>
 </head>
@@ -144,11 +191,29 @@
       <div class="badge">🥂 Invitation</div>
       <h1>20 ans de Mariage — Karen & Seb 💐</h1>
       
-      <div class="love-story">
-        <p class="journey-text">
-          🇮🇪 Holy Cross, Co. Tipperary (2006) → 🇫🇷 La Chapelle-Heulin (2026)
-        </p>
-        <p class="anniversary-text">Célébrons 20 ans d'amour et d'aventures !</p>
+      <div class="map-journey">
+        <div class="journey-title">Notre voyage : 20 ans d'amour 💕</div>
+        <div class="map-container">
+          <svg class="journey-path" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path class="path-line" d="M 35 30 Q 41.5 37.5 48 45" />
+          </svg>
+          
+          <div class="location-marker marker-ireland">
+            <div class="marker-pin">📍</div>
+            <div class="marker-label">
+              🇮🇪 Holy Cross, Co. Tipperary
+              <span class="year-badge">2006 - Notre mariage</span>
+            </div>
+          </div>
+          
+          <div class="location-marker marker-france">
+            <div class="marker-pin">🎉</div>
+            <div class="marker-label">
+              🇫🇷 La Chapelle-Heulin
+              <span class="year-badge">2026 - 20 ans ensemble!</span>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Image principale en style "carte" + parallax -->
