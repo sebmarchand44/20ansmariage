@@ -348,8 +348,26 @@
       nightTotalSpan.textContent = total + ' €';
     }
 
-    nightAdultsInput.addEventListener('input', updateNightTotal);
-    nightKidsInput.addEventListener('input', updateNightTotal);
+    // Synchroniser les nombres de nuitée avec les nombres présents
+    nightAdultsInput.addEventListener('input', () => {
+      updateNightTotal();
+      // Si nuitée adultes > adultes présents, augmenter adultes présents
+      const nightAdults = parseInt(nightAdultsInput.value) || 0;
+      const attAdults = parseInt(document.getElementById('attAdults').value) || 0;
+      if (nightAdults > attAdults) {
+        document.getElementById('attAdults').value = nightAdults;
+      }
+    });
+
+    nightKidsInput.addEventListener('input', () => {
+      updateNightTotal();
+      // Si nuitée enfants > enfants présents, augmenter enfants présents
+      const nightKids = parseInt(nightKidsInput.value) || 0;
+      const attKids = parseInt(document.getElementById('attKids').value) || 0;
+      if (nightKids > attKids) {
+        document.getElementById('attKids').value = nightKids;
+      }
+    });
 
     // Soumission du formulaire vers Google Forms
     form.addEventListener('submit', async (e) => {
