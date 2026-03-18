@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>Merci — RSVP</title>
+  <meta name="description" content="Merci pour votre RSVP" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Styles spécifiques à la page de confirmation */
+    .recap{margin-top:12px;text-align:left;background:#f8f9fa;border:1px solid #e9ecef;border-radius:12px;padding:12px}
+    .row{display:flex;justify-content:space-between;gap:8px;margin:4px 0}
+    .muted{opacity:.8;font-size:.95rem}
+    .btn{
+      display:inline-block;margin-top:14px;background:var(--accent);color:#fff;text-decoration:none;
+      padding:12px 16px;border-radius:12px;font-weight:600
+    }
+    .btn:hover{filter:brightness(.96)}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="badge">✅ Confirmation</div>
+      <h1>Merci !</h1>
+      <p>Votre confirmation a bien été enregistrée.</p>
+      <div id="recap" class="recap" style="display:none">
+        <div class="muted">Récapitulatif :</div>
+        <div class="row"><span>Adultes (présents)</span><strong id="rA">—</strong></div>
+        <div class="row"><span>Enfants &lt; 13 (présents)</span><strong id="rK">—</strong></div>
+        <div class="row"><span>Nom / Famille</span><strong id="rN">—</strong></div>
+        <div class="row"><span>Dormir sur place</span><strong id="rS">—</strong></div>
+        <div id="sleepBlock" style="display:none">
+          <hr style="border:none;border-top:1px solid #e9ecef;margin:8px 0">
+          <div class="row"><span>Nuitée — Adultes (36 €)</span><strong id="rNA">—</strong></div>
+          <div class="row"><span>Nuitée — Enfants (26 €)</span><strong id="rNK">—</strong></div>
+          <div class="row"><span>Total nuitée</span><strong id="rNT">—</strong></div>
+        </div>
+      </div>
+
+      <a class="btn" href="index.html">← Revenir à l'invitation</a>
+    </div>
+  </div>
+
+  <script>
+    // Lis le récap mis par rsvp.html (si présent)
+    try {
+      const s = sessionStorage.getItem('rsvp_summary');
+      if (s) {
+        const data = JSON.parse(s);
+        const $ = id => document.getElementById(id);
+        const show = elId => ($(elId).style.display = '');
+
+        $('rA').textContent  = data.attAdults ?? '0';
+        $('rK').textContent  = data.attKids ?? '0';
+        $('rN').textContent  = data.name || '—';
+        $('rS').textContent  = data.sleep || '—';
+
+        if (data.sleep === 'Oui') {
+          $('rNA').textContent = data.nightAdults ?? '0';
+          $('rNK').textContent = data.nightKids ?? '0';
+          $('rNT').textContent = (data.nightTotal ?? 0) + ' €';
+          show('sleepBlock');
+        }
+        show('recap');
+        // Optionnel : effacer après affichage
+        // sessionStorage.removeItem('rsvp_summary');
+      }
+    } catch (e) {
+      /* silencieux */
+    }
+  </script>
+</body>
+</html>

@@ -3,83 +3,248 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="robots" content="noindex" />
-  <title>Merci — RSVP</title>
-  <meta name="description" content="Merci pour votre RSVP" />
+  <title>RSVP — 20 ans de Mariage</title>
+  <meta name="description" content="Confirmez votre présence" />
+  <link rel="stylesheet" href="styles.css" />
   <style>
-    :root{--bg:#fffaf6;--card:#fff;--ink:#2b2b2b;--accent:#c77dff}
-    *{box-sizing:border-box}
-    body{
-      margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-      background:var(--bg);color:var(--ink)
+    /* Styles spécifiques au formulaire */
+    .form-group {
+      margin-bottom: 18px;
+      text-align: left;
     }
-    .wrap{max-width:640px;margin:28px auto;padding:16px}
-    .card{
-      background:var(--card);border-radius:16px;box-shadow:0 6px 24px rgba(0,0,0,.08);padding:22px;
-      text-align:center
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--ink);
     }
-    h1{font-size:clamp(1.4rem,1rem+1.6vw,2rem);margin:.2rem 0 .6rem}
-    p{line-height:1.6;margin:0.25rem 0}
-    .recap{margin-top:12px;text-align:left;background:#f8f9fa;border:1px solid #e9ecef;border-radius:12px;padding:12px}
-    .row{display:flex;justify-content:space-between;gap:8px;margin:4px 0}
-    .muted{opacity:.8;font-size:.95rem}
-    a.btn{
-      display:inline-block;margin-top:14px;background:var(--accent);color:#fff;text-decoration:none;
-      padding:12px 16px;border-radius:12px;font-weight:600
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: border-color 0.2s;
     }
-    a.btn:hover{filter:brightness(.96)}
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .form-group input[type="number"] {
+      max-width: 120px;
+    }
+    .form-group small {
+      display: block;
+      margin-top: 4px;
+      opacity: 0.7;
+      font-size: 0.9rem;
+    }
+    .radio-group {
+      display: flex;
+      gap: 16px;
+      margin-top: 8px;
+    }
+    .radio-group label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: normal;
+      cursor: pointer;
+    }
+    .radio-group input[type="radio"] {
+      width: auto;
+      cursor: pointer;
+    }
+    .submit-btn {
+      appearance: none;
+      border: none;
+      border-radius: 12px;
+      padding: 14px 24px;
+      font-weight: 600;
+      font-size: 1.05rem;
+      cursor: pointer;
+      background: var(--rsvp);
+      color: #fff;
+      width: 100%;
+      margin-top: 8px;
+      transition: filter 0.2s;
+    }
+    .submit-btn:hover {
+      filter: brightness(0.96);
+    }
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    #sleepSection {
+      margin-top: 12px;
+      padding: 16px;
+      background: #f8f9fa;
+      border-radius: 12px;
+      border: 1px solid #e9ecef;
+    }
+    .price-info {
+      background: #fff3cd;
+      border: 1px solid #ffc107;
+      border-radius: 8px;
+      padding: 12px;
+      margin-top: 12px;
+      font-size: 0.95rem;
+    }
+    .price-info strong {
+      color: #856404;
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
+  <div class="container">
     <div class="card">
-      <h1>✅ Merci !</h1>
-      <p>Votre confirmation a bien été envoyée.</p>
-      <div id="recap" class="recap" style="display:none">
-        <div class="muted">Récapitulatif :</div>
-        <div class="row"><span>Adultes (présents)</span><strong id="rA">—</strong></div>
-        <div class="row"><span>Enfants &lt; 13 (présents)</span><strong id="rK">—</strong></div>
-        <div class="row"><span>Nom / Famille</span><strong id="rN">—</strong></div>
-        <div class="row"><span>Dormir sur place</span><strong id="rS">—</strong></div>
-        <div id="sleepBlock" style="display:none">
-          <hr style="border:none;border-top:1px solid #e9ecef;margin:8px 0">
-          <div class="row"><span>Nuitée — Adultes (36 €)</span><strong id="rNA">—</strong></div>
-          <div class="row"><span>Nuitée — Enfants (26 €)</span><strong id="rNK">—</strong></div>
-          <div class="row"><span>Total nuitée</span><strong id="rNT">—</strong></div>
-        </div>
-      </div>
+      <div class="badge">📝 RSVP</div>
+      <h1>Confirmez votre présence</h1>
+      
+      <p style="margin-bottom: 24px;">
+        Merci de nous indiquer si vous pourrez être présent(e) pour célébrer nos 20 ans de mariage !
+      </p>
 
-      <a class="btn" href="./index.html">← Revenir à l’invitation</a>
+      <form id="rsvpForm">
+        <div class="form-group">
+          <label for="name">Nom / Famille *</label>
+          <input type="text" id="name" name="name" required placeholder="Ex: Famille Dupont" />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input type="email" id="email" name="email" required placeholder="votre@email.com" />
+          <small>Pour recevoir une confirmation</small>
+        </div>
+
+        <div class="form-group">
+          <label for="attAdults">Nombre d'adultes présents *</label>
+          <input type="number" id="attAdults" name="attAdults" min="0" max="20" value="0" required />
+        </div>
+
+        <div class="form-group">
+          <label for="attKids">Nombre d'enfants (< 13 ans) présents</label>
+          <input type="number" id="attKids" name="attKids" min="0" max="20" value="0" />
+        </div>
+
+        <div class="form-group">
+          <label>Souhaitez-vous dormir sur place ? *</label>
+          <div class="radio-group">
+            <label>
+              <input type="radio" name="sleep" value="Oui" required />
+              Oui
+            </label>
+            <label>
+              <input type="radio" name="sleep" value="Non" required />
+              Non
+            </label>
+          </div>
+        </div>
+
+        <div id="sleepSection" style="display: none;">
+          <h3 style="margin-top: 0; font-size: 1.1rem;">Détails de la nuitée</h3>
+          
+          <div class="form-group">
+            <label for="nightAdults">Nombre d'adultes (nuitée)</label>
+            <input type="number" id="nightAdults" name="nightAdults" min="0" max="20" value="0" />
+            <small>36 € par adulte</small>
+          </div>
+
+          <div class="form-group">
+            <label for="nightKids">Nombre d'enfants (nuitée)</label>
+            <input type="number" id="nightKids" name="nightKids" min="0" max="20" value="0" />
+            <small>26 € par enfant</small>
+          </div>
+
+          <div class="price-info">
+            <strong>Total nuitée :</strong> <span id="nightTotal">0 €</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message (optionnel)</label>
+          <textarea id="message" name="message" rows="4" placeholder="Un message pour nous ?"></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">Envoyer ma confirmation</button>
+      </form>
+
+      <p class="footer" style="margin-top: 20px;">
+        <a href="index.html" style="color: var(--accent);">← Revenir à l'invitation</a>
+      </p>
     </div>
   </div>
 
   <script>
-    // Lis le récap mis par rsvp.html (si présent)
-    try {
-      const s = sessionStorage.getItem('rsvp_summary');
-      if (s) {
-        const data = JSON.parse(s);
-        const $ = id => document.getElementById(id);
-        const show = elId => ($(elId).style.display = '');
+    const form = document.getElementById('rsvpForm');
+    const sleepRadios = document.querySelectorAll('input[name="sleep"]');
+    const sleepSection = document.getElementById('sleepSection');
+    const nightAdultsInput = document.getElementById('nightAdults');
+    const nightKidsInput = document.getElementById('nightKids');
+    const nightTotalSpan = document.getElementById('nightTotal');
 
-        $('rA').textContent  = data.attAdults ?? '0';
-        $('rK').textContent  = data.attKids ?? '0';
-        $('rN').textContent  = data.name || '—';
-        $('rS').textContent  = data.sleep || '—';
-
-        if (data.sleep === 'Oui') {
-          $('rNA').textContent = data.nightAdults ?? '0';
-          $('rNK').textContent = data.nightKids ?? '0';
-          $('rNT').textContent = (data.nightTotal ?? 0) + ' €';
-          show('sleepBlock');
+    // Afficher/masquer la section nuitée
+    sleepRadios.forEach(radio => {
+      radio.addEventListener('change', (e) => {
+        if (e.target.value === 'Oui') {
+          sleepSection.style.display = 'block';
+        } else {
+          sleepSection.style.display = 'none';
+          nightAdultsInput.value = '0';
+          nightKidsInput.value = '0';
+          updateNightTotal();
         }
-        show('recap');
-        // Optionnel : effacer après affichage
-        // sessionStorage.removeItem('rsvp_summary');
-      }
-    } catch (e) {
-      /* silencieux */
+      });
+    });
+
+    // Calculer le total de la nuitée
+    function updateNightTotal() {
+      const adults = parseInt(nightAdultsInput.value) || 0;
+      const kids = parseInt(nightKidsInput.value) || 0;
+      const total = (adults * 36) + (kids * 26);
+      nightTotalSpan.textContent = total + ' €';
     }
+
+    nightAdultsInput.addEventListener('input', updateNightTotal);
+    nightKidsInput.addEventListener('input', updateNightTotal);
+
+    // Soumission du formulaire
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const formData = new FormData(form);
+      const data = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        attAdults: formData.get('attAdults'),
+        attKids: formData.get('attKids'),
+        sleep: formData.get('sleep'),
+        nightAdults: formData.get('nightAdults') || '0',
+        nightKids: formData.get('nightKids') || '0',
+        message: formData.get('message'),
+        nightTotal: (parseInt(formData.get('nightAdults') || 0) * 36) + (parseInt(formData.get('nightKids') || 0) * 26)
+      };
+
+      // Sauvegarder dans sessionStorage pour la page de confirmation
+      sessionStorage.setItem('rsvp_summary', JSON.stringify(data));
+
+      // Simuler l'envoi (vous pouvez remplacer par un vrai endpoint)
+      const submitBtn = form.querySelector('.submit-btn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Envoi en cours...';
+
+      // Simuler un délai d'envoi
+      setTimeout(() => {
+        // Rediriger vers la page de confirmation
+        window.location.href = 'confirmation.html';
+      }, 800);
+    });
   </script>
 </body>
 </html>
