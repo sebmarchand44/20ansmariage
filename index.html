@@ -48,86 +48,6 @@
     .buttons { animation-delay: 0.5s; }
     .map { animation-delay: 0.6s; }
     .footer { animation-delay: 0.7s; }
-    
-    /* Map Journey Animation */
-    .map-journey {
-      position: relative;
-      height: 400px;
-      margin: 20px 0;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    
-    .journey-title {
-      position: absolute;
-      top: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 10;
-      background: rgba(255, 255, 255, 0.95);
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--accent);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    }
-    
-    .map-frame {
-      width: 100%;
-      height: 100%;
-      border: none;
-      opacity: 0;
-      animation: mapFadeIn 1s ease-out forwards;
-    }
-    
-    .map-overlay {
-      position: absolute;
-      bottom: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 10;
-      background: rgba(255, 255, 255, 0.95);
-      padding: 12px 20px;
-      border-radius: 12px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.2);
-      text-align: center;
-      animation: overlaySlideUp 1.5s ease-out;
-    }
-    
-    .location-info {
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin: 4px 0;
-    }
-    
-    .location-ireland {
-      color: #2e7d32;
-    }
-    
-    .location-france {
-      color: var(--rsvp);
-    }
-    
-    @keyframes mapFadeIn {
-      to { opacity: 1; }
-    }
-    
-    @keyframes overlaySlideUp {
-      from {
-        opacity: 0;
-        transform: translateX(-50%) translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-      }
-    }
-    
-    @media (prefers-reduced-motion: reduce){
-      .map-frame, .map-overlay { animation: none !important; opacity: 1; }
-    }
   </style>
 </head>
 <body>
@@ -138,25 +58,6 @@
       <div class="badge">🥂 Invitation</div>
       <h1>20 ans de Mariage — Karen & Seb 💐</h1>
       
-      <div class="map-journey">
-        <div class="journey-title">Notre voyage : 20 ans d'amour 💕</div>
-        <iframe
-          class="map-frame"
-          src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d2441234.123456789!2d-5.5!3d50.5!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x485b1f5d5d5d5d5d%3A0x5d5d5d5d5d5d5d5d!2sHoly%20Cross%2C%20Co.%20Tipperary%2C%20Ireland!3m2!1d52.6!2d-7.9!4m5!1s0x4805ee81d2b2b2b2%3A0xb2b2b2b2b2b2b2b2!2sLa%20Chapelle-Heulin%2C%20France!3m2!1d47.2!2d-1.3!5e0!3m2!1sen!2s!4v1234567890123!5m2!1sen!2s"
-          width="100%"
-          height="100%"
-          style="border:0;"
-          allowfullscreen=""
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
-        <div class="map-overlay">
-          <div class="location-info location-ireland">🇮🇪 Holy Cross, Co. Tipperary (2006)</div>
-          <div style="margin: 8px 0; color: var(--accent);">→ 20 ans d'amour →</div>
-          <div class="location-info location-france">🇫🇷 La Chapelle-Heulin (2026)</div>
-        </div>
-      </div>
-
       <!-- Image principale en style "carte" + parallax -->
       <div class="hero card-look">
         <div class="hero-parallax">
