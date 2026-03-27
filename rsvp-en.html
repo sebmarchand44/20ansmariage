@@ -254,18 +254,42 @@
 
       <form id="rsvpForm">
         <div class="form-group">
-          <label for="name">Name / Family *</label>
-          <input type="text" id="name" name="name" required placeholder="E.g., Nash Family" />
+          <label for="name">Your name *</label>
+          <input type="text" id="name" name="name" required placeholder="" />
         </div>
 
         <div class="form-group">
           <label for="attAdults">Number of adults attending *</label>
-          <input type="number" id="attAdults" name="attAdults" min="0" max="20" value="0" required />
+          <select id="attAdults" name="attAdults" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
         </div>
 
         <div class="form-group">
           <label for="attKids">Number of children (< 13 years) attending</label>
-          <input type="number" id="attKids" name="attKids" min="0" max="20" value="0" />
+          <select id="attKids" name="attKids">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
         </div>
 
         <div class="form-group">
@@ -287,13 +311,37 @@
           
           <div class="form-group">
             <label for="nightAdults">Number of adults (overnight)</label>
-            <input type="number" id="nightAdults" name="nightAdults" min="0" max="20" value="0" />
+            <select id="nightAdults" name="nightAdults">
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
             <small>€36 per adult</small>
           </div>
 
           <div class="form-group">
             <label for="nightKids">Number of children (overnight)</label>
-            <input type="number" id="nightKids" name="nightKids" min="0" max="20" value="0" />
+            <select id="nightKids" name="nightKids">
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
             <small>€26 per child</small>
           </div>
 
