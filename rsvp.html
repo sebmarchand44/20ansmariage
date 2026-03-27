@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>RSVP — 20th Wedding Anniversary</title>
-  <meta name="description" content="Confirm your attendance" />
+  <title>RSVP — 20 ans de Mariage</title>
+  <meta name="description" content="Confirmez votre présence" />
   <link rel="stylesheet" href="styles.css" />
   <style>
     /* Smooth scrolling moderne pour mobile */
@@ -204,78 +204,78 @@
   <!-- Indicateur de progression du scroll -->
   <div class="scroll-indicator" id="scrollIndicator"></div>
   
-  <!-- Back to top button -->
-  <button class="scroll-top" id="scrollTop" aria-label="Back to top">↑</button>
+  <!-- Bouton retour en haut -->
+  <button class="scroll-top" id="scrollTop" aria-label="Retour en haut">↑</button>
   
   <div class="container">
     <div class="card">
       <div class="badge">📝 RSVP</div>
-      <h1>Confirm Your Attendance</h1>
+      <h1>Confirmez votre présence</h1>
       
       <p style="margin-bottom: 24px;">
-        Please let us know if you'll be able to join us in celebrating our 20th wedding anniversary!
+        Merci de nous indiquer si vous pourrez être présent(e) pour célébrer nos 20 ans de mariage !
       </p>
 
       <form id="rsvpForm">
         <div class="form-group">
-          <label for="name">Name / Family *</label>
-          <input type="text" id="name" name="name" required placeholder="E.g., Smith Family" />
+          <label for="name">Nom / Famille *</label>
+          <input type="text" id="name" name="name" required placeholder="Ex: Famille Dupont" />
         </div>
 
         <div class="form-group">
-          <label for="attAdults">Number of adults attending *</label>
+          <label for="attAdults">Nombre d'adultes présents *</label>
           <input type="number" id="attAdults" name="attAdults" min="0" max="20" value="0" required />
         </div>
 
         <div class="form-group">
-          <label for="attKids">Number of children (< 13 years) attending</label>
+          <label for="attKids">Nombre d'enfants (< 13 ans) présents</label>
           <input type="number" id="attKids" name="attKids" min="0" max="20" value="0" />
         </div>
 
         <div class="form-group">
-          <label>Would you like to stay overnight? *</label>
+          <label>Souhaitez-vous dormir sur place ? *</label>
           <div class="radio-group">
             <label>
-              <input type="radio" name="sleep" value="Yes" required />
-              Yes
+              <input type="radio" name="sleep" value="Oui" required />
+              Oui
             </label>
             <label>
-              <input type="radio" name="sleep" value="No" required />
-              No
+              <input type="radio" name="sleep" value="Non" required />
+              Non
             </label>
           </div>
         </div>
 
         <div id="sleepSection" style="display: none;">
-          <h3 style="margin-top: 0; font-size: 1.1rem;">Overnight Stay Details</h3>
+          <h3 style="margin-top: 0; font-size: 1.1rem;">Détails de la nuitée</h3>
           
           <div class="form-group">
-            <label for="nightAdults">Number of adults (overnight)</label>
+            <label for="nightAdults">Nombre d'adultes (nuitée)</label>
             <input type="number" id="nightAdults" name="nightAdults" min="0" max="20" value="0" />
-            <small>€36 per adult</small>
+            <small>36 € par adulte</small>
           </div>
 
           <div class="form-group">
-            <label for="nightKids">Number of children (overnight)</label>
+            <label for="nightKids">Nombre d'enfants (nuitée)</label>
             <input type="number" id="nightKids" name="nightKids" min="0" max="20" value="0" />
-            <small>€26 per child</small>
+            <small>26 € par enfant</small>
           </div>
 
           <div class="price-info">
-            <strong>Overnight total:</strong> <span id="nightTotal">€0</span> to be paid on-site
+            <strong>Total nuitée :</strong> <span id="nightTotal">0 €</span> à régler sur place
           </div>
         </div>
 
         <div class="form-group">
-          <label for="message">Message (optional)</label>
-          <textarea id="message" name="message" rows="4" placeholder="A message for us?"></textarea>
+          <label for="message">Message (optionnel)</label>
+          <textarea id="message" name="message" rows="4" placeholder="Un message pour nous ?"></textarea>
         </div>
 
-        <button type="submit" class="submit-btn">Send My Confirmation</button>
+        <button type="submit" class="submit-btn">Envoyer ma confirmation</button>
       </form>
 
       <p class="footer" style="margin-top: 20px;">
-        <a href="index.html" style="color: var(--accent);">← Back to invitation</a>
+        <a href="index.html" style="color: var(--accent);">← Revenir à l'invitation</a>
       </p>
     </div>
   </div>
@@ -323,9 +323,9 @@
     // Afficher/masquer la section nuitée
     sleepRadios.forEach(radio => {
       radio.addEventListener('change', (e) => {
-        if (e.target.value === 'Yes') {
+        if (e.target.value === 'Oui') {
           sleepSection.style.display = 'block';
-          // Auto-fill with number of adults and children attending
+          // Auto-remplir avec les nombres d'adultes et enfants présents
           const attAdults = document.getElementById('attAdults').value;
           const attKids = document.getElementById('attKids').value;
           nightAdultsInput.value = attAdults || '0';
@@ -390,9 +390,9 @@
 
       const submitBtn = form.querySelector('.submit-btn');
       submitBtn.disabled = true;
-      submitBtn.textContent = 'Sending...';
+      submitBtn.textContent = 'Envoi en cours...';
 
-      // Prepare data for Google Forms
+      // Préparer les données pour Google Forms
       const googleFormData = new FormData();
       googleFormData.append('entry.279557762', data.name);
       googleFormData.append('entry.178898459', data.attAdults);
