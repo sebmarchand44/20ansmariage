@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex" />
-  <title>Merci — RSVP</title>
-  <meta name="description" content="Merci pour votre RSVP" />
+  <title>Thank You — RSVP</title>
+  <meta name="description" content="Thank you for your RSVP" />
   <link rel="stylesheet" href="styles.css" />
   <style>
     /* Smooth scrolling moderne */
@@ -77,8 +77,8 @@
 <body>
   <!-- Language switcher -->
   <div class="lang-switcher">
-    <a href="confirmation.html" class="active">🇫🇷 FR</a>
-    <a href="confirmation-en.html">🇮🇪 EN</a>
+    <a href="confirmation.html">🇫🇷 FR</a>
+    <a href="confirmation-en.html" class="active">🇮🇪 EN</a>
   </div>
   
   <div class="container">
@@ -105,7 +105,7 @@
   </div>
 
   <script>
-    // Lis le récap mis par rsvp.html (si présent)
+    // Read the summary from rsvp-en.html (if present)
     try {
       const s = sessionStorage.getItem('rsvp_summary');
       if (s) {
@@ -118,18 +118,18 @@
         $('rN').textContent  = data.name || '—';
         $('rS').textContent  = data.sleep || '—';
 
-        if (data.sleep === 'Oui') {
+        if (data.sleep === 'Yes' || data.sleep === 'Oui') {
           $('rNA').textContent = data.nightAdults ?? '0';
           $('rNK').textContent = data.nightKids ?? '0';
           $('rNT').textContent = (data.nightTotal ?? 0) + ' €';
           show('sleepBlock');
         }
         show('recap');
-        // Optionnel : effacer après affichage
+        // Optional: clear after display
         // sessionStorage.removeItem('rsvp_summary');
       }
     } catch (e) {
-      /* silencieux */
+      /* silent */
     }
   </script>
 </body>

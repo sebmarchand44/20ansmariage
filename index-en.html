@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Invitation — 20 ans de Mariage</title>
-  <meta name="description" content="Invitation — 20 ans de Mariage Karen & Seb" />
+  <title>Invitation — 20th Wedding Anniversary</title>
+  <meta name="description" content="Invitation — 20th Wedding Anniversary Karen & Seb" />
   <link rel="stylesheet" href="styles.css" />
   <style>
     /* Smooth scrolling moderne */
@@ -82,8 +82,8 @@
 <body>
   <!-- Language switcher -->
   <div class="lang-switcher">
-    <a href="index.html" class="active">🇫🇷 FR</a>
-    <a href="index-en.html">🇮🇪 EN</a>
+    <a href="index.html">🇫🇷 FR</a>
+    <a href="index-en.html" class="active">🇮🇪 EN</a>
   </div>
   
   <!-- Indicateur de progression du scroll -->
@@ -91,14 +91,14 @@
   <div class="container">
     <div class="card">
       <div class="badge">🥂 Invitation</div>
-      <h1>20 ans de Mariage — Karen & Seb 💐</h1>
+      <h1>20th Wedding Anniversary — Karen & Seb 💐</h1>
       
-      <!-- Image principale en style "carte" + parallax -->
+      <!-- Main image in "card" style + parallax -->
       <div class="hero card-look">
         <div class="hero-parallax">
           <img
             src="assets/holycross_2026.jpg"
-            alt="Lieu de l’événement — 20 ans de Mariage Karen & Seb"
+            alt="Event venue — 20th Wedding Anniversary Karen & Seb"
             class="hero-img"
             width="1600"
             height="1067"
@@ -109,17 +109,17 @@
       </div>
 
       <div class="info">
-        <p><strong>📅 Quand ?</strong> Samedi 25 juillet 2026 à 13h</p>
-        <p><strong>📍 Où ?</strong> Village Vigneron, 4 La Plessisière, 44330 La Chapelle-Heulin, France</p>
-        <p>Fêtons ensemble nos 20 ans de mariage !</p>
+        <p><strong>📅 When?</strong> Saturday, July 25th, 2026 at 1:00 PM</p>
+        <p><strong>📍 Where?</strong> Village Vigneron, 4 La Plessisière, 44330 La Chapelle-Heulin, France</p>
+        <p>Let's celebrate our 20th wedding anniversary together!</p>
       </div>
 
-      <!-- 👉 Bouton RSVP uniquement -->
+      <!-- 👉 RSVP button only -->
       <div class="buttons">
-        <a class="button rsvp" href="rsvp.html">Confirmer ma présence (RSVP)</a>
+        <a class="button rsvp" href="rsvp-en.html">Confirm Your Attendance (RSVP)</a>
       </div>
 
-      <!-- Carte Google Maps -->
+      <!-- Google Maps -->
       <div class="map">
         <iframe
           src="https://www.google.com/maps?q=Village%20Vigneron%2C%204%20La%20Plessisi%C3%A8re%2C%2044330%20La%20Chapelle-Heulin%2C%20France&output=embed"
@@ -156,7 +156,7 @@
       let lastY = 0;
       const strength = 0.12; // intensité du mouvement (plus petit = plus subtil)
 
-      // On observe l’entrée/sortie de la section pour n’animer que quand elle est visible
+      // On observe l'entrée/sortie de la section pour n'animer que quand elle est visible
       const io = new IntersectionObserver(entries => {
         entries.forEach(e => { inView = e.isIntersecting; });
       }, { threshold: 0 });
@@ -166,7 +166,7 @@
       const tick = () => {
         if (inView) {
           const rect = wrapper.getBoundingClientRect();
-          // distance depuis le centre de l’écran ([-0.5..0.5] environ)
+          // distance depuis le centre de l'écran ([-0.5..0.5] environ)
           const progress = (rect.top + rect.height * 0.5 - window.innerHeight * 0.5) / window.innerHeight;
           // déplacement vertical
           const targetY = progress * (rect.height * strength);
@@ -182,4 +182,3 @@
   </script>
 </body>
 </html>
-``
