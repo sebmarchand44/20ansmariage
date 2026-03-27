@@ -310,7 +310,7 @@
           <h3 style="margin-top: 0; font-size: 1.1rem;">Overnight Stay Details</h3>
           
           <div class="form-group">
-            <label for="nightAdults">Number of adults (overnight)</label>
+            <label for="nightAdults">Number of adults (overnight) — €36 per adult</label>
             <select id="nightAdults" name="nightAdults">
               <option value="0">0</option>
               <option value="1">1</option>
@@ -324,11 +324,10 @@
               <option value="9">9</option>
               <option value="10">10</option>
             </select>
-            <small>€36 per adult</small>
           </div>
 
           <div class="form-group">
-            <label for="nightKids">Number of children (overnight)</label>
+            <label for="nightKids">Number of children (overnight) — €26 per child</label>
             <select id="nightKids" name="nightKids">
               <option value="0">0</option>
               <option value="1">1</option>
@@ -342,7 +341,6 @@
               <option value="9">9</option>
               <option value="10">10</option>
             </select>
-            <small>€26 per child</small>
           </div>
 
           <div class="price-info">
@@ -477,11 +475,12 @@
       submitBtn.textContent = 'Sending...';
 
       // Prepare data for Google Forms
+      // Convert English values to French for Google Form compatibility
       const googleFormData = new FormData();
       googleFormData.append('entry.279557762', data.name);
       googleFormData.append('entry.178898459', data.attAdults);
       googleFormData.append('entry.191678164', data.attKids);
-      googleFormData.append('entry.1115312584', data.sleep);
+      googleFormData.append('entry.1115312584', data.sleep === 'Yes' ? 'Oui' : 'Non');
       googleFormData.append('entry.1070553550', data.nightAdults);
       googleFormData.append('entry.1451773897', data.nightKids);
       googleFormData.append('entry.701520142', data.message || '');
